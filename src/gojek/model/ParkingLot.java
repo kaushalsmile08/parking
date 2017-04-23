@@ -1,46 +1,57 @@
 package gojek.model;
 
+import gojek.util.ParkingUtil;
+
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class ParkingLot {
-	private ParkingSpot[] spots;
-	private SortedSet<Integer> availableSpots = new TreeSet<>();
-	private static boolean isCreated = false;
-	private ParkingLot parkingLot = null;
+	private ParkingSlot[] slots;
+	private SortedSet<Integer> availableSlots = new TreeSet<>();
+	private static ParkingLot parkingLot = null;
 
-	public ParkingLot(int availableSpot) {
-		spots = new ParkingSpot[availableSpot];
-		while (availableSpot > 0) {
-			availableSpots.add(availableSpot);
-			availableSpot--;
+	private ParkingLot(int availableslot) {
+		slots = new ParkingSlot[availableslot + 1];
+		while (availableslot > 0) {
+			availableSlots.add(availableslot);
+			availableslot--;
 		}
 	}
 
-	public int getAvailableSpot() {
-		return availableSpots.size();
+	public int getAvailableslot() {
+		return availableSlots.size();
 	}
 
-	public boolean parkVehical(Vehical vehical) {
-		if (availableSpots.size() == 0) {
-			return false;
+	public String parkVehical(Vehical vehical) {
+		if (availableSlots.size() == 0) {
+			return "Sorry, parking lot is full";
 		}
-		int nearestSpot = availableSpots.first();
-		ParkingSpot parkingSpot = new ParkingSpot(vehical, nearestSpot);
-		spots[nearestSpot] = parkingSpot;
-		return true;
+		int nearestSlot = availableSlots.first();
+		ParkingSlot parkingslot = new ParkingSlot(vehical, nearestSlot);
+		slots[nearestSlot] = parkingslot;
+		ParkingUtil.addVehicalDetails(vehical, nearestSlot);
+		return "Allocated slot number: " + nearestSlot;
+	}
+
+	public String releaseVehical(int slotId) {
+		if (availableSlots.contains(slotId)) {
+			return "Slot number " + slotId + " is already free";
+		} else {
+			slots[slotId].vacantSlot();
+			slots[slotId] = null;
+			return "Slot number " + slotId + " is free";
+		}
 	}
 
 	public static String createParkingLot(int size)
 			throws IllegalAccessException {
 		boolean flag = false;
-		if (!isCreated) {
+		if (Objects.isNull(parkingLot)) {
 			synchronized (ParkingLot.class) {
-				if (!isCreated) {
+				if (Objects.isNull(parkingLot)) {
 					parkingLot = new ParkingLot(size);
-					parkingLotCreated = true;
 					flag = true;
-					return "Created a parking lot with " + size + " slots";
 				}
 			}
 		}
@@ -48,17 +59,13 @@ public class ParkingLot {
 			throw new IllegalAccessException(
 					"Parking lot can be created only once");
 		}
-		return null;
+		return "Created a parking lot with " + size + " slots";
 	}
 
 	public static ParkingLot getParkingLot() {
-		if (!parkingLotCreated) {
-			synchronized (ParkingLot.class) {
-				if (!parkingLotCreated) {
-					throw new IllegalStateException(
-							"Parking lot must be created before using it");
-				}
-			}
+		if (Objects.isNull(parkingLot)) {
+			throw new IllegalStateException(
+					"Parking lot must be created before using it");
 		}
 		return parkingLot;
 	}

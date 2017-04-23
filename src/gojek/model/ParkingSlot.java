@@ -1,12 +1,12 @@
 package gojek.model;
 
-public class ParkingSpot {
+public class ParkingSlot {
 	private Vehical vehical;
-	private int spotNumber;
+	private int slotNumber;
 
-	public ParkingSpot(Vehical vehical, int spotNumber) {
+	public ParkingSlot(Vehical vehical, int slotNumber) {
 		this.vehical = vehical;
-		this.spotNumber = spotNumber;
+		this.slotNumber = slotNumber;
 	}
 
 	public boolean isAvailable() {
@@ -21,7 +21,7 @@ public class ParkingSpot {
 		return isParked;
 	}
 
-	public void vacantSpot() {
+	public void vacantSlot() {
 		vehical = null;
 	}
 
@@ -29,7 +29,7 @@ public class ParkingSpot {
 		return vehical;
 	}
 
-	public int getSpotNumber() {
-		return spotNumber;
+	public int getSlotNumber() {
+		return slotNumber;
 	}
 }

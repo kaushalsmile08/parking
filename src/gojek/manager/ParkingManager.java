@@ -1,14 +1,22 @@
 package gojek.manager;
 
-import gojek.model.ParkingSpot;
+import gojek.model.ParkingLot;
 import gojek.model.Vehical;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class ParkingManager {
-	private static Map<String, List<Vehical>> colorToVehiclesMap = new HashMap<>();
-	private static Map<String, ParkingSpot> registrationNumberToVehicleMap = new HashMap<>();
 
+	public String createParkingLot(int size) throws IllegalAccessException {
+		return ParkingLot.createParkingLot(size);
+	}
+
+	public static String parkVehical(Vehical v) {
+		ParkingLot pLot = ParkingLot.getParkingLot();
+		return pLot.parkVehical(v);
+
+	}
+
+	public static String releaseVehical(int id) {
+		ParkingLot pLot = ParkingLot.getParkingLot();
+		return pLot.releaseVehical(id);
+	}
 }
