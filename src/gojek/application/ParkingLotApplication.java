@@ -34,24 +34,23 @@ public class ParkingLotApplication {
 	private static void handleInput(BufferedReader br) throws Exception {
 		String inputLine;
 		while (Objects.nonNull(inputLine = br.readLine())) {
-
 			String[] inputArray = inputLine.split(" ");
 			String s = null;
 			if (inputArray.length > 0) {
-				switch (inputArray[0]) {
+				switch (inputArray[0].toLowerCase()) {
 				case "create_parking_lot":
 					s = ParkingLot.createParkingLot(Integer
-							.parseInt(inputArray[1]));
+							.parseInt(inputArray[1].toLowerCase()));
 					break;
 
 				case "park":
-					s = ParkingManager.parkVehicle(new Vehicle(inputArray[2],
-							inputArray[1]));
+					s = ParkingManager.parkVehicle(new Vehicle(inputArray[2]
+							.toLowerCase(), inputArray[1].toLowerCase()));
 					break;
 
 				case "leave":
 					s = ParkingManager.releaseVehicle(Integer
-							.parseInt(inputArray[1]));
+							.parseInt(inputArray[1].toLowerCase()));
 					break;
 
 				case "status":
@@ -59,15 +58,18 @@ public class ParkingLotApplication {
 					break;
 
 				case "registration_numbers_for_cars_with_colour":
-					s = ParkingUtil.getVehicleNoByColor(inputArray[1]);
+					s = ParkingUtil.getVehicleNoByColor(inputArray[1]
+							.toLowerCase());
 					break;
 
 				case "slot_numbers_for_cars_with_colour":
-					s = ParkingUtil.getSlotNoByColor((inputArray[1]));
+					s = ParkingUtil.getSlotNoByColor((inputArray[1]
+							.toLowerCase()));
 					break;
 
 				case "slot_number_for_registration_number":
-					s = ParkingManager.getSlotIdByVehicleNo(inputArray[1]);
+					s = ParkingManager.getSlotIdByVehicleNo(inputArray[1]
+							.toLowerCase());
 					break;
 				case "exit":
 					System.exit(0);

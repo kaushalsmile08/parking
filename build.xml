@@ -1,0 +1,66 @@
+<project name="AntJavaProject" default="main" basedir=".">
+	<description>
+		Create a Java Project (JAR) with Ant build script
+	</description>
+
+	<property name="projectName" value="Parking" />
+
+	<!-- Java sources -->
+	<property name="src.dir" location="src" />
+	<property name="class.dir" location="classes" />
+
+	<!-- Java classes -->
+	<property name="build.dir" location="bin" />
+	<property name="dist.dir" location="dist" />
+
+	<path id="classpath">
+			<pathelement path="${build.dir}" />
+			<pathelement path="${class.dir}" />
+			
+		</path>
+	
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${class.dir}" />
+		
+	</target>
+
+	<target name="build1" depends="init" description="Build parking project ">
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}" />
+	</target>
+
+	<target name="dist" depends="build" description="package, output to JAR">
+		<mkdir dir="${dist.dir}" />
+		<jar jarfile="${dist.dir}/${projectName}-${DSTAMP}.jar" basedir="${build.dir}" >
+		    <manifest>
+			<attribute name="Main-Class" value="gojek.application.ParkingLotApplication" />
+		    </manifest>
+		</jar>
+	</target>
+
+	<target name="clean" description="clean up">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+		<delete dir="${class.dir}" />
+	</target>
+	
+	
+	<target name="main" depends="clean, build, dist" />
+	
+	<target name="build" depends="init">
+		<javac destdir="${class.dir}" includes="**/*.java" verbose="no" debug="yes" encoding="ISO8859_1" fork="true" memoryInitialSize="768m" memoryMaximumSize="3072m">
+				<src path="${src.dir}/" />
+		</javac>
+	</target>
+			
+	
+	<target name="run" depends="build, input-runargs" description="run the project">
+	  <java classname="gojek.application.ParkingLotApplication" classpathref="classpath" fork="true" maxmemory="1524m">
+	    <arg line="${args}"/>
+	  </java>
+	</target>
+	<target name="input-runargs" unless="args" description="prompts for command line arguments if necessary">
+	  <input addProperty="args" message="Type the desired command line arguments:"/>
+	</target>
+
+</project>
