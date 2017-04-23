@@ -37,7 +37,7 @@ public class ParkingUtil {
 		StringBuilder sb = new StringBuilder();
 		List<ParkingSlot> slotList = colorToVehiclesMap.get(color);
 		for (ParkingSlot s : slotList) {
-			sb.append(s.getVehicle().getColor());
+			sb.append(s.getVehicle().getNumber());
 			sb.append(", ");
 		}
 		return removeLastChar(sb.toString());

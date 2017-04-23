@@ -36,47 +36,46 @@ public class ParkingLotApplication {
 		while (Objects.nonNull(inputLine = br.readLine())) {
 
 			String[] inputArray = inputLine.split(" ");
+			String s = null;
 			if (inputArray.length > 0) {
-
 				switch (inputArray[0]) {
 				case "create_parking_lot":
-					System.out.println(ParkingLot.createParkingLot(Integer
-							.parseInt(inputArray[1])));
+					s = ParkingLot.createParkingLot(Integer
+							.parseInt(inputArray[1]));
 					break;
 
 				case "park":
-					System.out.println(ParkingManager.parkVehicle(new Vehicle(
-							inputArray[2], inputArray[1])));
+					s = ParkingManager.parkVehicle(new Vehicle(inputArray[2],
+							inputArray[1]));
 					break;
 
 				case "leave":
-					System.out.println(ParkingManager.releaseVehicle(Integer
-							.parseInt(inputArray[1])));
+					s = ParkingManager.releaseVehicle(Integer
+							.parseInt(inputArray[1]));
 					break;
 
 				case "status":
-					// ParkingManager.generateStatus();
+					s = ParkingManager.getStatus();
 					break;
 
 				case "registration_numbers_for_cars_with_colour":
-					System.out.println(ParkingUtil
-							.getVehicleNoByColor(inputArray[1]));
+					s = ParkingUtil.getVehicleNoByColor(inputArray[1]);
 					break;
 
 				case "slot_numbers_for_cars_with_colour":
-					System.out.println(ParkingUtil
-							.getSlotNoByColor((inputArray[1])));
+					s = ParkingUtil.getSlotNoByColor((inputArray[1]));
 					break;
 
 				case "slot_number_for_registration_number":
-					System.out.println(ParkingManager
-							.getSlotIdByVehicleNo(inputArray[1]));
+					s = ParkingManager.getSlotIdByVehicleNo(inputArray[1]);
 					break;
-
-				default:
-					System.out.println("Parking application is exiting");
+				case "exit":
 					System.exit(0);
+					break;
+				default:
+					s = "Invalid ip for exit type exit";
 				}
+				System.out.println(s);
 			}
 		}
 	}

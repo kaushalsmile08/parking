@@ -21,6 +21,11 @@ public class ParkingManager {
 		return pLot.releaseVehicle(id);
 	}
 
+	public static String getStatus() {
+		ParkingLot pLot = ParkingLot.getParkingLot();
+		return pLot.getDetails();
+
+	}
 	public static String getSlotIdByVehicleNo(String vehicleNo) {
 		String slot = ParkingUtil.getSlotNobyVehicle(vehicleNo);
 		if (slot == null) {

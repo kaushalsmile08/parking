@@ -28,6 +28,7 @@ public class ParkingLot {
 			return "Sorry, parking lot is full";
 		}
 		int nearestSlot = availableSlots.first();
+		availableSlots.remove(nearestSlot);
 		ParkingSlot parkingslot = new ParkingSlot(vehicle, nearestSlot);
 		slots[nearestSlot] = parkingslot;
 		ParkingUtil.addVehicleDetails(parkingslot);
@@ -41,6 +42,7 @@ public class ParkingLot {
 			ParkingUtil.removeVehicalDetails(slots[slotId]);
 			slots[slotId].vacantSlot();
 			slots[slotId] = null;
+			availableSlots.add(slotId);
 			return "Slot number " + slotId + " is free";
 		}
 	}
@@ -69,5 +71,22 @@ public class ParkingLot {
 					"Parking lot must be created before using it");
 		}
 		return parkingLot;
+	}
+
+	public String getDetails() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Slot No.\tRegistration No\tColour");
+		for (int i=0;i<slots.length;i++) {
+			if(slots[i] != null) {
+				sb.append("\n");
+				sb.append(i);
+				sb.append("\t");
+				sb.append(slots[i].getVehicle().getNumber());
+				sb.append("\t");
+				sb.append(slots[i].getVehicle().getColor());
+
+			}
+		}
+		return sb.toString();
 	}
 }
