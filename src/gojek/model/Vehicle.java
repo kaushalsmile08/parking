@@ -1,10 +1,10 @@
 package gojek.model;
 
-public class Vehical {
+public class Vehicle {
 	private String color;
 	private String number;
 
-	public Vehical(String color, String number) {
+	public Vehicle(String color, String number) {
 		this.color = color;
 		this.number = number;
 	}

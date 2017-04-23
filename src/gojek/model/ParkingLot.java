@@ -23,21 +23,22 @@ public class ParkingLot {
 		return availableSlots.size();
 	}
 
-	public String parkVehical(Vehical vehical) {
+	public String parkVehicle(Vehicle vehicle) {
 		if (availableSlots.size() == 0) {
 			return "Sorry, parking lot is full";
 		}
 		int nearestSlot = availableSlots.first();
-		ParkingSlot parkingslot = new ParkingSlot(vehical, nearestSlot);
+		ParkingSlot parkingslot = new ParkingSlot(vehicle, nearestSlot);
 		slots[nearestSlot] = parkingslot;
-		ParkingUtil.addVehicalDetails(vehical, nearestSlot);
+		ParkingUtil.addVehicleDetails(parkingslot);
 		return "Allocated slot number: " + nearestSlot;
 	}
 
-	public String releaseVehical(int slotId) {
+	public String releaseVehicle(int slotId) {
 		if (availableSlots.contains(slotId)) {
 			return "Slot number " + slotId + " is already free";
 		} else {
+			ParkingUtil.removeVehicalDetails(slots[slotId]);
 			slots[slotId].vacantSlot();
 			slots[slotId] = null;
 			return "Slot number " + slotId + " is free";

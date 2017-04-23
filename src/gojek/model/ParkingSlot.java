@@ -1,32 +1,32 @@
 package gojek.model;
 
 public class ParkingSlot {
-	private Vehical vehical;
+	private Vehicle vehicle;
 	private int slotNumber;
 
-	public ParkingSlot(Vehical vehical, int slotNumber) {
-		this.vehical = vehical;
+	public ParkingSlot(Vehicle vehicle, int slotNumber) {
+		this.vehicle = vehicle;
 		this.slotNumber = slotNumber;
 	}
 
 	public boolean isAvailable() {
-		return vehical == null;
+		return vehicle == null;
 	}
 
-	public boolean park(Vehical v) {
+	public boolean park(Vehicle v) {
 		boolean isParked = isAvailable();
 		if (isParked) {
-			vehical = v;
+			vehicle = v;
 		}
 		return isParked;
 	}
 
 	public void vacantSlot() {
-		vehical = null;
+		vehicle = null;
 	}
 
-	public Vehical getVehical() {
-		return vehical;
+	public Vehicle getVehicle() {
+		return vehicle;
 	}
 
 	public int getSlotNumber() {
